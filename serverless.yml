@@ -1,0 +1,32 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: ${env:ORGANISATION}
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: exam
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: exam
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  profile: ${env:PROVIDER_PROFILE}
+  region: eu-north-1
+  iam:
+    role: ${env:PROVIDER_IAM_ROLE}
+
+plugins:
+  - serverless-dotenv-plugin
+  # - serverless-webpack
+
+package:
+  individually: true
+
+build:
+  esbuild: false
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
