@@ -12,5 +12,12 @@
   "devDependencies": {
     "serverless-dotenv-plugin": "^6.0.0",
     "serverless-webpack": "^5.15.0"
+  },
+  "dependencies": {
+    "@middy/core": "^5.5.1",
+    "aws-sdk": "^2.1692.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "nanoid": "^5.0.8"
   }
 }

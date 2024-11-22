@@ -24,24 +24,64 @@ build:
   esbuild: false
 
 functions:
-  hello:
-    handler: handler.hello
+  # getNotes:
+  #   handler: functions/getNotes/index.handler
+  #   events:
+  #     - httpApi:
+  #         path: /api/notes
+  #         method: get
+  # postNotes:
+  #   handler: functions/postNotes/index.handler
+  #   events:
+  #     - httpApi:
+    #       path: /api/notes
+    #       method: post
+  # changeNotes:
+  #   handler: functions/changeNotes/index.handler
+  #   events:
+  #     - httpApi:
+    #       path: /api/notes
+    #       method: put
+  # deleteNotes:
+  #   handler: functions/deleteNotes/index.handler
+  #   events:
+  #     - httpApi:
+    #       path: /api/notes
+    #       method: delete
+  signUp:
+    handler: functions/signUp/index.handler
     events:
       - httpApi:
-          path: /
-          method: get
-
+          path: /api/user/signup
+          method: post
+  # logIn:
+  #   handler: functions/logIn/index.handler
+  #   events:
+  #     - httpApi:
+    #       path: /api/user/login
+    #       method: post
 
 resources:
   Resources:
     notesDB:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${env:RESOURCES_TABLENAME}
+        TableName: notes-db
         AttributeDefinitions: 
           - AttributeName: id
             AttributeType: S
         KeySchema: 
           - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    usersDB:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: accounts
+        AttributeDefinitions: 
+          - AttributeName: username
+            AttributeType: S
+        KeySchema: 
+          - AttributeName: username
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
