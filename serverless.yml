@@ -54,12 +54,12 @@ functions:
       - httpApi:
           path: /api/user/signup
           method: post
-  # logIn:
-  #   handler: functions/logIn/index.handler
-  #   events:
-  #     - httpApi:
-    #       path: /api/user/login
-    #       method: post
+  login:
+    handler: functions/login/index.handler
+    events:
+      - httpApi:
+          path: /api/user/login
+          method: post
 
 resources:
   Resources:
