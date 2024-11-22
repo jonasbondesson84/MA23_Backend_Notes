@@ -21,7 +21,8 @@ package:
   individually: true
 
 build:
-  esbuild: false
+  esbuild: 
+    minify: true
 
 functions:
   # getNotes:
@@ -30,12 +31,12 @@ functions:
   #     - httpApi:
   #         path: /api/notes
   #         method: get
-  # postNotes:
-  #   handler: functions/postNotes/index.handler
-  #   events:
-  #     - httpApi:
-    #       path: /api/notes
-    #       method: post
+  postNotes:
+    handler: functions/postNotes/index.handler
+    events:
+      - httpApi:
+          path: /api/notes
+          method: post
   # changeNotes:
   #   handler: functions/changeNotes/index.handler
   #   events:
