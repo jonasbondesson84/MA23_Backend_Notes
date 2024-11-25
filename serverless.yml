@@ -43,12 +43,12 @@ functions:
   #     - httpApi:
     #       path: /api/notes
     #       method: put
-  # deleteNotes:
-  #   handler: functions/deleteNotes/index.handler
-  #   events:
-  #     - httpApi:
-    #       path: /api/notes
-    #       method: delete
+  deleteNotes:
+    handler: functions/deleteNotes/index.handler
+    events:
+      - httpApi:
+          path: /api/notes
+          method: delete
   signUp:
     handler: functions/signUp/index.handler
     events:
