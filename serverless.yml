@@ -25,12 +25,12 @@ build:
     minify: true
 
 functions:
-  # getNotes:
-  #   handler: functions/getNotes/index.handler
-  #   events:
-  #     - httpApi:
-  #         path: /api/notes
-  #         method: get
+  getNotes:
+    handler: functions/getNotes/index.handler
+    events:
+      - httpApi:
+          path: /api/notes
+          method: get
   postNotes:
     handler: functions/postNotes/index.handler
     events:
