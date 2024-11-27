@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-
+// const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 const validateToken = {
     before : async (request) => {
