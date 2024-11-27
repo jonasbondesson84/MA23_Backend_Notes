@@ -1,30 +1,33 @@
-const middy = require("@middy/core");
-const { sendResponse } = require("../../responses")
+import middy from '@middy/core';
+import { sendResponse } from '../../responses';
+import validator from '@middy/validator';
+import transpileSchema  from '@middy/validator/transpile';
+import httpJsonBodyParser from '@middy/http-json-body-parser';
+import { validateToken } from '../middleware/auth';
+import AWS from 'aws-sdk';
+import httpErrorHandler from '@middy/http-error-handler';
+import createHttpError from 'http-errors';
 
-const { validateToken } = require("../middleware/auth");
-const AWS = require('aws-sdk');
 const db = new AWS.DynamoDB.DocumentClient();
 
 const getNotes =  async (event, context) => {
    
     
     if(event.error && event.error === '401') {
-        return sendResponse(401, {success: false, message: "Invalid token"});
+        throw new createHttpError.Unauthorized('Invalid token');
+        // return sendResponse(401, {success: false, message: "Invalid token"});
     }
     
     const userID = event.id;
-  
-    
-
 
     try {
         const params = {
-                        TableName: 'notes-db',
-                        FilterExpression: 'userID = :value',  
-                        ExpressionAttributeValues: {
-                          ':value': userID
-                        }
-                      };
+                    TableName: 'notes-db',
+                    FilterExpression: 'userID = :value',  
+                    ExpressionAttributeValues: {
+                        ':value': userID
+                    }
+                    };
         const data = await db.scan(params).promise();
         if (data && data.Items.length > 0) {
             return sendResponse(200, {success: true, items: data.Items})
@@ -35,11 +38,13 @@ const getNotes =  async (event, context) => {
     
         
     } catch (error) {
-        return sendResponse(400, {message: error})
+        throw new createHttpError.InternalServerError('Database error');
+        // return sendResponse(500, {message: error})
     }
 }
 
 const handler = middy(getNotes)
     .use(validateToken)
+    .use(httpErrorHandler())
 
 module.exports = {handler}

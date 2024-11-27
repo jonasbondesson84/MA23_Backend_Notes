@@ -14,9 +14,14 @@
     "serverless-webpack": "^5.15.0"
   },
   "dependencies": {
-    "@middy/core": "^4.0",
+    "@middy/core": "^5.0",
+    "@middy/http-error-handler": "^6.0.0",
+    "@middy/http-json-body-parser": "^6.0.0",
+    "@middy/validator": "^6.0.0",
+    "ajv": "^8.17.1",
     "aws-sdk": "^2.1692.0",
     "bcryptjs": "^2.4.3",
+    "http-errors": "^2.0.0",
     "jsonwebtoken": "^9.0.2",
     "nanoid": "^5.0.8"
   }

@@ -1,8 +1,16 @@
-const { sendResponse } = require("../../responses");
-const bcrypt = require('bcryptjs');
-const AWS = require('aws-sdk');
+import middy from '@middy/core';
+import { sendResponse } from '../../responses';
+import {eventSchema} from '../../schemas/login/schema';
+import validator from '@middy/validator';
+import httpJsonBodyParser from '@middy/http-json-body-parser';
+import httpErrorHandler from '@middy/http-error-handler';
+import createHttpError from 'http-errors';
+import AWS from 'aws-sdk';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
 const db = new AWS.DynamoDB.DocumentClient();
-const jwt = require('jsonwebtoken');
+
 
 
 async function getUser(username) {
@@ -42,9 +50,9 @@ async function login(username, password) {
     return {success: true, token: token}
 }
 
-exports.handler = async (event, context) => {
+const loginFunction = async (event, context) => {
     
-    const {username, password} = JSON.parse(event.body);
+    const {username, password} = event.body;
 
     const result = await login(username, password);
 
@@ -54,3 +62,10 @@ exports.handler = async (event, context) => {
         return sendResponse(400, result);
 
 }
+
+const handler = middy(loginFunction)
+    .use(httpJsonBodyParser())
+    .use(validator({eventSchema}))
+    .use(httpErrorHandler());
+
+module.exports = {handler}

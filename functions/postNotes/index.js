@@ -1,56 +1,57 @@
-const middy = require("@middy/core");
-const { sendResponse } = require("../../responses")
-
-const { validateToken } = require("../middleware/auth");
-const AWS = require('aws-sdk');
+import middy from '@middy/core';
+import { sendResponse } from '../../responses';
+import validator from '@middy/validator';
+import {transpileSchema} from '@middy/validator/transpile';
+import httpJsonBodyParser from '@middy/http-json-body-parser';
+import { validateToken } from '../middleware/auth';
+import AWS from 'aws-sdk';
+import {eventSchema} from '../../schemas/postNotes/schema';
+import httpErrorHandler from '@middy/http-error-handler';
+import createHttpError from 'http-errors';
+import { nanoid } from 'nanoid';
 const db = new AWS.DynamoDB.DocumentClient();
 
-let nanoid;
-(async () => {
-  const module = await import('nanoid');
-  nanoid = module.nanoid;
-})();
 
 const postNote =  async (event, context) => {
-    if (!nanoid) {
-        const module = await import('nanoid');
-        nanoid = module.nanoid;
-    }
-    
+   
     if(event.error && event.error === '401') {
-        return sendResponse(401, {success: false, message: "Invalid token"});
+        throw new createHttpError.Unauthorized('Invalid token');
+            // return sendResponse(401, {success: false, message: "Invalid token"});
     }
-    
+        
     const userID = event.id;
     const username = event.username;
-    const {title, text } = JSON.parse(event.body);
+    console.log(event.body);
+    const {noteTitle, noteText} = event.body;
     const id = nanoid();
     const createdAt = new Date().toISOString();
-    
 
     const newNote = {
         id: id,
         userID: userID,
-        title: title,
-        text: text,
+        noteTitle: noteTitle,
+        noteText: noteText,
         createdAt: createdAt,
         modifiedAt: createdAt,
-        deleteAt: null,
+            
     }
-
     try {
         const result = await db.put({
             TableName: 'notes-db',
             Item: newNote
         }).promise();
-    
+        
         return sendResponse(200, {newNote});
     } catch (error) {
-        return sendResponse(400, {message: error})
+        throw new createHttpError.InternalServerError('Database error');
+        // return sendResponse(500, {message: error})
     }
 }
 
-const handler = middy(postNote)
+ const handler = middy(postNote)
+    .use(httpJsonBodyParser())
     .use(validateToken)
+    .use(validator({eventSchema}))
+    .use(httpErrorHandler());
 
 module.exports = {handler}

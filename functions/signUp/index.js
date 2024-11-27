@@ -1,14 +1,34 @@
 // const { nanoid } = require("nanoid");
-const { sendResponse } = require("../../responses");
-const bcrypt = require('bcryptjs');
-const AWS = require('aws-sdk');
+import middy from '@middy/core';
+import { sendResponse } from '../../responses';
+import {eventSchema} from '../../schemas/signUp/schema';
+import validator from '@middy/validator';
+import httpJsonBodyParser from '@middy/http-json-body-parser';
+import httpErrorHandler from '@middy/http-error-handler';
+import createHttpError from 'http-errors';
+import AWS from 'aws-sdk';
+import bcrypt from 'bcryptjs';
+import { nanoid } from 'nanoid';
+
 const db = new AWS.DynamoDB.DocumentClient();
 
-let nanoid;
-(async () => {
-  const module = await import('nanoid');
-  nanoid = module.nanoid;
-})();
+async function checkUsername(username) {
+    try {
+        const params = {
+            TableName: 'accounts',
+            Key: {
+                username: username,
+            }
+        }
+
+        const result = await db.get(params).promise();
+        return result.Item;
+
+    } catch (error) {
+
+    }
+}
+
 
 async function createAccount(username, hashedPassword, userID, firstname, lastname) {
 
@@ -38,22 +58,20 @@ async function signUp(username, password, firstname, lastname) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const userID = nanoid();
+    const userExist = await checkUsername(username);
+
+    if (userExist) {
+        throw new createHttpError.BadRequest('Username is already in use');
+    }
 
     const result = await createAccount(username, hashedPassword, userID, firstname, lastname);
     return result;
 
 }
 
-exports.handler = async (event, context) => {
-    if (!nanoid) {
-        const module = await import('nanoid');
-        nanoid = module.nanoid;
-    }
+const signUpFunction = async (event, context) => {
 
-    
-    const {username, password, firstname, lastname} = JSON.parse(event.body);
-
-
+    const {username, password, firstname, lastname} = event.body;
     const result = await signUp(username, password, firstname, lastname);
 
     if (result.success)
@@ -62,3 +80,12 @@ exports.handler = async (event, context) => {
         return sendResponse(400, result);
 
 }
+
+const handler = middy(signUpFunction)
+    .use(httpJsonBodyParser())
+    .use(validator({eventSchema}))
+    .use(httpErrorHandler());
+
+module.exports = {handler}
+
+
