@@ -1,0 +1,290 @@
+{
+	"info": {
+		"_postman_id": "d9bb1fa0-7e8d-42e2-afcd-b3b0bfe135ec",
+		"name": "notes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21186366"
+	},
+	"item": [
+		{
+			"name": "https://u7rq4m5yeh.execute-api.eu-north-1.amazonaws.com/api/notes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im14UU10SkxZRkk1bHRPVFVWeHR0ViIsInVzZXJuYW1lIjoiam9uYXNib25kZXNzb24iLCJpYXQiOjE3MzI3ODM3MzMsImV4cCI6MTczMjc4NzMzM30.smpGwXl3OvT4h4BOZJAREuWOMIRdNX3OAeg9hCzVKq4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"noteID\" : \"4Aq5NvvamBwaMRTgJYPkh\",\n\"noteTitle\" : \"title\",\n\"noteText\" : \"text\",\n\"myHouse\": \"new\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://u7rq4m5yeh.execute-api.eu-north-1.amazonaws.com/api/notes",
+					"protocol": "https",
+					"host": [
+						"u7rq4m5yeh",
+						"execute-api",
+						"eu-north-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"api",
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://u7rq4m5yeh.execute-api.eu-north-1.amazonaws.com/api/notes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im14UU10SkxZRkk1bHRPVFVWeHR0ViIsInVzZXJuYW1lIjoiam9uYXNib25kZXNzb24iLCJpYXQiOjE3MzI3ODM3MzMsImV4cCI6MTczMjc4NzMzM30.smpGwXl3OvT4h4BOZJAREuWOMIRdNX3OAeg9hCzVKq4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"noteID\" : \"4Aq5NvvamBwaMRTgJYP\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://u7rq4m5yeh.execute-api.eu-north-1.amazonaws.com/api/notes",
+					"protocol": "https",
+					"host": [
+						"u7rq4m5yeh",
+						"execute-api",
+						"eu-north-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"api",
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://u7rq4m5yeh.execute-api.eu-north-1.amazonaws.com/api/notes/undelete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im14UU10SkxZRkk1bHRPVFVWeHR0ViIsInVzZXJuYW1lIjoiam9uYXNib25kZXNzb24iLCJpYXQiOjE3MzI3ODM3MzMsImV4cCI6MTczMjc4NzMzM30.smpGwXl3OvT4h4BOZJAREuWOMIRdNX3OAeg9hCzVKq4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"noteID\" : \"4Aq5NvvamBwaMRTgJYP\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://u7rq4m5yeh.execute-api.eu-north-1.amazonaws.com/api/notes/undelete",
+					"protocol": "https",
+					"host": [
+						"u7rq4m5yeh",
+						"execute-api",
+						"eu-north-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"api",
+						"notes",
+						"undelete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://u7rq4m5yeh.execute-api.eu-north-1.amazonaws.com/api/notes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im14UU10SkxZRkk1bHRPVFVWeHR0ViIsInVzZXJuYW1lIjoiam9uYXNib25kZXNzb24iLCJpYXQiOjE3MzI3MDI2MzcsImV4cCI6MTczMjcwNjIzN30.3rOW2OReP9IGwVqTd320iaqCWd_cCGQsibnUs6HWM8A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"noteTitle\" : \"new note\",\n\"noteText\" : \"new text\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://u7rq4m5yeh.execute-api.eu-north-1.amazonaws.com/api/notes",
+					"protocol": "https",
+					"host": [
+						"u7rq4m5yeh",
+						"execute-api",
+						"eu-north-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"api",
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://u7rq4m5yeh.execute-api.eu-north-1.amazonaws.com/api/notes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im14UU10SkxZRkk1bHRPVFVWeHR0ViIsInVzZXJuYW1lIjoiam9uYXNib25kZXNzb24iLCJpYXQiOjE3MzI3ODM3MzMsImV4cCI6MTczMjc4NzMzM30.smpGwXl3OvT4h4BOZJAREuWOMIRdNX3OAeg9hCzVKq4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://u7rq4m5yeh.execute-api.eu-north-1.amazonaws.com/api/notes",
+					"protocol": "https",
+					"host": [
+						"u7rq4m5yeh",
+						"execute-api",
+						"eu-north-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"api",
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://u7rq4m5yeh.execute-api.eu-north-1.amazonaws.com/api/user/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\" : \"jonasbondesson\",\n\"password\" : \"12345\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://u7rq4m5yeh.execute-api.eu-north-1.amazonaws.com/api/user/login",
+					"protocol": "https",
+					"host": [
+						"u7rq4m5yeh",
+						"execute-api",
+						"eu-north-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"api",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://u7rq4m5yeh.execute-api.eu-north-1.amazonaws.com/api/user/signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\" : \"jonn\",\n\"password\" : \"12345\",\n\"firstname\" : \"jonas\",\n\"lastname\" : \"Bondesson\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://u7rq4m5yeh.execute-api.eu-north-1.amazonaws.com/api/user/signup",
+					"protocol": "https",
+					"host": [
+						"u7rq4m5yeh",
+						"execute-api",
+						"eu-north-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"api",
+						"user",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
