@@ -1,4 +1,3 @@
-// const { nanoid } = require("nanoid");
 import middy from '@middy/core';
 import { sendResponse } from '../../responses';
 import {eventSchema} from '../../schemas/signUp/schema';
@@ -60,9 +59,9 @@ async function signUp(username, password, firstname, lastname) {
     const userID = nanoid();
     const userExist = await checkUsername(username);
 
-    if (userExist) {
+    if (userExist) 
         throw new createHttpError.BadRequest('Username is already in use');
-    }
+    
 
     const result = await createAccount(username, hashedPassword, userID, firstname, lastname);
     return result;
@@ -77,7 +76,7 @@ const signUpFunction = async (event, context) => {
     if (result.success)
         return sendResponse(200, result);
     else 
-        return sendResponse(400, result);
+        throw new createHttpError.InternalServerError(result);
 
 }
 

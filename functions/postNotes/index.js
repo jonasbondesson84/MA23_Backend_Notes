@@ -1,7 +1,6 @@
 import middy from '@middy/core';
 import { sendResponse } from '../../responses';
 import validator from '@middy/validator';
-import {transpileSchema} from '@middy/validator/transpile';
 import httpJsonBodyParser from '@middy/http-json-body-parser';
 import { validateToken } from '../middleware/auth';
 import AWS from 'aws-sdk';
@@ -14,14 +13,11 @@ const db = new AWS.DynamoDB.DocumentClient();
 
 const postNote =  async (event, context) => {
    
-    if(event.error && event.error === '401') {
+    if(event.error && event.error === '401') 
         throw new createHttpError.Unauthorized('Invalid token');
-            // return sendResponse(401, {success: false, message: "Invalid token"});
-    }
-        
+            
     const userID = event.id;
-    const username = event.username;
-    console.log(event.body);
+
     const {noteTitle, noteText} = event.body;
     const id = nanoid();
     const createdAt = new Date().toISOString();

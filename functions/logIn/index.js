@@ -59,7 +59,7 @@ const loginFunction = async (event, context) => {
     if(result.success) 
         return sendResponse(200, result);
     else 
-        return sendResponse(400, result);
+        throw new createHttpError.InternalServerError(result);
 
 }
 
