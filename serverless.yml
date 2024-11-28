@@ -49,6 +49,12 @@ functions:
       - httpApi:
           path: /api/notes
           method: delete
+  undeleteNotes:
+    handler: functions/undeleteNotes/index.handler
+    events:
+      - httpApi:
+          path: /api/notes/undelete
+          method: post
   signUp:
     handler: functions/signUp/index.handler
     events:
