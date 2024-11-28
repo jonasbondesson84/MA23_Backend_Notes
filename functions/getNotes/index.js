@@ -1,8 +1,5 @@
 import middy from '@middy/core';
 import { sendResponse } from '../../responses';
-import validator from '@middy/validator';
-import transpileSchema  from '@middy/validator/transpile';
-import httpJsonBodyParser from '@middy/http-json-body-parser';
 import { validateToken } from '../middleware/auth';
 import AWS from 'aws-sdk';
 import httpErrorHandler from '@middy/http-error-handler';
@@ -13,10 +10,8 @@ const db = new AWS.DynamoDB.DocumentClient();
 const getNotes =  async (event, context) => {
    
     
-    if(event.error && event.error === '401') {
+    if(event.error && event.error === '401') 
         throw new createHttpError.Unauthorized('Invalid token');
-        // return sendResponse(401, {success: false, message: "Invalid token"});
-    }
     
     const userID = event.id;
 
@@ -32,7 +27,8 @@ const getNotes =  async (event, context) => {
         if (data && data.Items.length > 0) {
             return sendResponse(200, {success: true, items: data.Items})
         } else {
-            return sendResponse(400, {success: false, message: "No notes for user."})
+            throw new createHttpError.NotFound('No notes found');
+            // return sendResponse(400, {success: false, message: "No notes for user."})
         }
                       
     

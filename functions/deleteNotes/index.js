@@ -9,15 +9,36 @@ import httpErrorHandler from '@middy/http-error-handler';
 import createHttpError from 'http-errors';
 const db = new AWS.DynamoDB.DocumentClient();
 
+async function checkNoteExist(id) {
+    try {
+        const params = {
+            TableName: 'notes-db',
+            Key: {
+                id: id,
+            }
+        }
+
+        const result = await db.get(params).promise();
+        return result.Item;
+
+    } catch (error) {
+
+    }
+}
+
 const deleteNote =  async (event, context) => {
    
-    if(event.error && event.error === '401') {
+    if(event.error && event.error === '401') 
         throw new createHttpError.Unauthorized('Invalid token');
-        // return sendResponse(401, {success: false, message: "Invalid token"});
-    }
     
     const userID = event.id;
     const {noteID} = event.body;
+
+    const noteExists = await checkNoteExist(noteID);
+
+    if(!noteExists) 
+        throw new createHttpError.NotFound('Note does not exist.')
+
     const deleteAt = Math.floor(Date.now() / 1000) + 60;
   
     try {
@@ -34,14 +55,7 @@ const deleteNote =  async (event, context) => {
             ReturnValues: 'UPDATED_NEW'
           };
           const result = await db.update(params).promise();
-        // const params = {
-        //                 TableName: 'notes-db',
-        //                 Key: {
-        //                     id: noteID,
-
-        //                 }
-        //               };
-        // await db.delete(params).promise();
+       
         
         return sendResponse(200, {success: true, message: "Item scheduled for deletion"});
     } catch (error) {
